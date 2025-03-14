@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  StyleSheet,
-  View,
-  AppState,
-  TextInput,
-  Button,
-} from "react-native";
+import { Alert, StyleSheet, View, AppState, Button } from "react-native";
 import { Stack } from "expo-router";
 import { supabase } from "@/lib/supabase";
 
@@ -19,34 +12,17 @@ AppState.addEventListener("change", (state) => {
 });
 
 export default function AuthScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
+  async function signInWithGitHub() {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
     });
 
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }
-
-  async function signUpWithEmail() {
-    setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
+    if (error) {
+      Alert.alert(error.message);
+    }
     setLoading(false);
   }
 
@@ -54,35 +30,11 @@ export default function AuthScreen() {
     <>
       <Stack.Screen options={{ title: "Sign In" }} />
       <View style={styles.container}>
-        <View style={[styles.verticallySpaced, styles.mt20]}>
-          <TextInput
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-            placeholder="email@address.com"
-            autoCapitalize={"none"}
-          />
-        </View>
-        <View style={styles.verticallySpaced}>
-          <TextInput
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            secureTextEntry={true}
-            placeholder="Password"
-            autoCapitalize={"none"}
-          />
-        </View>
-        <View style={[styles.verticallySpaced, styles.mt20]}>
-          <Button
-            title="Sign in"
-            disabled={loading}
-            onPress={() => signInWithEmail()}
-          />
-        </View>
         <View style={styles.verticallySpaced}>
           <Button
-            title="Sign up"
+            title={loading ? "Loading..." : "Sign in with GitHub"}
             disabled={loading}
-            onPress={() => signUpWithEmail()}
+            onPress={() => signInWithGitHub()}
           />
         </View>
       </View>
@@ -92,15 +44,13 @@ export default function AuthScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
   },
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,
     alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
   },
 });

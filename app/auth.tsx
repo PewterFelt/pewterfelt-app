@@ -19,6 +19,7 @@ export default function AuthScreen() {
 
   async function signInWithGitHub() {
     setLoading(true);
+
     try {
       const redirectUrl = Linking.createURL("/auth/callback");
 
@@ -33,7 +34,6 @@ export default function AuthScreen() {
       if (error) throw error;
       if (!data?.url) throw new Error("No authentication URL available");
 
-      // Open the GitHub login page in the in-app browser
       const result = await WebBrowser.openAuthSessionAsync(
         data.url,
         redirectUrl,

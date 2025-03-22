@@ -13,6 +13,7 @@ import "react-native-reanimated";
 
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import "./global.css";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,7 +24,6 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    // Prepare WebBrowser for auth sessions
     WebBrowser.warmUpAsync();
 
     return () => {

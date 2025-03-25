@@ -22,7 +22,6 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       if (!authChecked) setAuthChecked(true);
     });
 
-    // Initial session check
     const checkSession = async () => {
       const {
         data: { session },

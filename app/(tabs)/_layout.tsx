@@ -37,7 +37,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="settings"
         options={{
           tabBarIcon: ({ color }) => <GearSix weight="duotone" color={color} />,
         }}

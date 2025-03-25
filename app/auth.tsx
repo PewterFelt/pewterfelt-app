@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import * as Linking from "expo-linking";
 import { Stack, useRouter } from "expo-router";
-import * as WebBrowser from "expo-web-browser";
+import { openAuthSessionAsync } from "expo-web-browser";
 import React, { useState } from "react";
 import { Alert, AppState, Button, StyleSheet, View } from "react-native";
 
@@ -34,10 +34,7 @@ export default function AuthScreen() {
       if (error) throw error;
       if (!data?.url) throw new Error("No authentication URL available");
 
-      const result = await WebBrowser.openAuthSessionAsync(
-        data.url,
-        redirectUrl,
-      );
+      const result = await openAuthSessionAsync(data.url, redirectUrl);
 
       if (result.type === "success") {
         const url = result.url;

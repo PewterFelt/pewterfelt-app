@@ -1,5 +1,5 @@
 import { URLInput } from "@/components/URLInput";
-import { FontAwesome } from "@expo/vector-icons";
+import { XCircle } from "phosphor-react-native";
 import { useState } from "react";
 import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 import {
@@ -58,28 +58,28 @@ export default function HomeScreen() {
   });
 
   return (
-    <GestureHandlerRootView className="flex-1 bg-gray-700">
+    <GestureHandlerRootView className="flex-1 bg-neutral-900">
+      {isExpanded && (
+        <TouchableOpacity
+          className="absolute top-16 right-4 z-10 bg-neutral-800 p-2 rounded-full"
+          onPress={() => {
+            height.value = withSpring(MIN_HEIGHT, {
+              damping: 20,
+              stiffness: 200,
+            });
+            setIsExpanded(false);
+          }}
+        >
+          <XCircle size={24} color="white" />
+        </TouchableOpacity>
+      )}
+
       <GestureDetector gesture={Gesture.Simultaneous(tapGesture, panGesture)}>
         <Animated.View
-          className="absolute bottom-0 left-0 right-0 bg-gray-800 mx-2 rounded-t-2xl p-4 pt-2 shadow-top"
-          style={[containerStyle, { zIndex: 1 }]}
+          className="absolute z-10 bottom-0 left-0 right-0 mx-2 rounded-t-2xl p-4 pt-2 shadow-top dark:bg-neutral-800"
+          style={[containerStyle]}
         >
-          <View className="w-10 h-1 bg-gray-300 rounded-full self-center mb-3 mt-1" />
-
-          {isExpanded && (
-            <TouchableOpacity
-              className="absolute top-4 right-4 z-10 p-2"
-              onPress={() => {
-                height.value = withSpring(MIN_HEIGHT, {
-                  damping: 20,
-                  stiffness: 200,
-                });
-                setIsExpanded(false);
-              }}
-            >
-              <FontAwesome name="close" size={24} color="gray" />
-            </TouchableOpacity>
-          )}
+          <View className="w-10 h-1 rounded-full self-center mb-3 mt-1 bg-pewter-gray" />
 
           {isExpanded && (
             <URLInput isExpanded={isExpanded} MAX_HEIGHT={MAX_HEIGHT} />

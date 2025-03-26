@@ -8,8 +8,13 @@ import {
   Text,
   View,
 } from "react-native";
+import Animated from "react-native-reanimated";
 
-export default function LinksList() {
+type Props = {
+  contentStyle: { opacity: number };
+};
+
+export default function LinksList({ contentStyle }: Props) {
   const { session } = useSession();
   const [links, setLinks] = useState<{ url: string; title: string }[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,53 +67,55 @@ export default function LinksList() {
   }
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefreshing}
-          onRefresh={handleRefresh}
-          tintColor="#f4a261"
-          colors={["#f4a261"]}
-        />
-      }
-      contentContainerStyle={{
-        flexDirection: "row",
-        paddingHorizontal: 16,
-      }}
-    >
-      {/* Left Column */}
-      <View className="flex-1 mr-2">
-        {links
-          .filter((_, index) => index % 2 === 0)
-          .map((item, index) => (
-            <View
-              key={`left-${index}`}
-              className="bg-neutral-800 p-4 rounded-lg mb-4"
-            >
-              <Text className="text-white text-lg font-semibold mb-1">
-                {item.title || "Untitled Link"}
-              </Text>
-              <Text className="text-neutral-400">{item.url}</Text>
-            </View>
-          ))}
-      </View>
+    <Animated.View className="flex-1 pt-20 px-4" style={contentStyle}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor="#f4a261"
+            colors={["#f4a261"]}
+          />
+        }
+        contentContainerStyle={{
+          flexDirection: "row",
+          paddingHorizontal: 16,
+        }}
+      >
+        {/* Left Column */}
+        <View className="flex-1 mr-2">
+          {links
+            .filter((_, index) => index % 2 === 0)
+            .map((item, index) => (
+              <View
+                key={`left-${index}`}
+                className="bg-neutral-800 p-4 rounded-lg mb-4"
+              >
+                <Text className="text-white text-lg font-semibold mb-1">
+                  {item.title || "Untitled Link"}
+                </Text>
+                <Text className="text-neutral-400">{item.url}</Text>
+              </View>
+            ))}
+        </View>
 
-      {/* Right Column */}
-      <View className="flex-1 ml-2">
-        {links
-          .filter((_, index) => index % 2 === 1)
-          .map((item, index) => (
-            <View
-              key={`right-${index}`}
-              className="bg-neutral-800 p-4 rounded-lg mb-4"
-            >
-              <Text className="text-white text-lg font-semibold mb-1">
-                {item.title || "Untitled Link"}
-              </Text>
-              <Text className="text-neutral-400">{item.url}</Text>
-            </View>
-          ))}
-      </View>
-    </ScrollView>
+        {/* Right Column */}
+        <View className="flex-1 ml-2">
+          {links
+            .filter((_, index) => index % 2 === 1)
+            .map((item, index) => (
+              <View
+                key={`right-${index}`}
+                className="bg-neutral-800 p-4 rounded-lg mb-4"
+              >
+                <Text className="text-white text-lg font-semibold mb-1">
+                  {item.title || "Untitled Link"}
+                </Text>
+                <Text className="text-neutral-400">{item.url}</Text>
+              </View>
+            ))}
+        </View>
+      </ScrollView>
+    </Animated.View>
   );
 }

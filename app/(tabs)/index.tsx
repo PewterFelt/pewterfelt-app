@@ -13,8 +13,8 @@ import {
 
 export default function HomeScreen() {
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");
-  const MAX_HEIGHT = SCREEN_HEIGHT - 130;
-  const MIN_HEIGHT = 180;
+  const MAX_HEIGHT = SCREEN_HEIGHT - 210;
+  const MIN_HEIGHT = 60;
   const SPRING_CONFIG = {
     damping: 20,
     stiffness: 200,
@@ -32,7 +32,11 @@ export default function HomeScreen() {
   }));
 
   const contentStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(height.value, [MIN_HEIGHT, MAX_HEIGHT], [1, 0]),
+    opacity: interpolate(
+      height.value,
+      [MIN_HEIGHT, (MAX_HEIGHT * 2) / 3],
+      [1, 0],
+    ),
   }));
 
   const panGesture = Gesture.Pan()
@@ -64,7 +68,7 @@ export default function HomeScreen() {
   });
 
   return (
-    <GestureHandlerRootView className="flex-1 bg-neutral-900">
+    <GestureHandlerRootView className="flex-1 bg-pewter-gray/5 dark:bg-pewter-black">
       <LinksList contentStyle={contentStyle} />
 
       <AddURLPanel

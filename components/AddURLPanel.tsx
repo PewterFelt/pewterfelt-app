@@ -1,4 +1,5 @@
 import { URLInput } from "@/components/URLInput";
+import { Colors } from "@/constants/Colors";
 import { Check, XCircle } from "phosphor-react-native";
 import { useState } from "react";
 import {
@@ -47,23 +48,23 @@ export default function AddURLPanel({
         className="absolute top-20 left-0 z-10 w-full flex-row items-center justify-center px-2"
         style={headerStyle}
       >
-        <Text className="dark:text-neutral-500 text-xl absolute">
+        <Text className="dark:text-pewter-gray text-xl absolute">
           Add a URL link
         </Text>
         <TouchableOpacity
-          className="dark:bg-neutral-800 p-2 rounded-full ml-auto"
+          className="bg-pewter-white dark:bg-pewter-black p-2 rounded-full ml-auto"
           onPress={onClose}
         >
-          <XCircle size={24} color="#f4a261" weight="duotone" />
+          <XCircle size={24} color={Colors["orange"]} weight="duotone" />
         </TouchableOpacity>
       </Animated.View>
 
       <GestureDetector gesture={Gesture.Simultaneous(tapGesture, panGesture)}>
         <Animated.View
-          className="absolute z-10 bottom-0 left-0 right-0 mx-2 rounded-t-2xl p-4 pt-2 shadow-top dark:bg-neutral-800"
+          className="absolute z-10 bg-pewter-white bottom-[80px] transform -translate-y-2 left-0 right-0 mx-2 rounded-2xl p-4 pt-2 dark:bg-white/5"
           style={containerStyle}
         >
-          <View className="w-10 h-1 rounded-full self-center mb-3 mt-1 bg-pewter-gray" />
+          <View className="w-10 h-1 rounded-full self-center mb-3 mt-1 bg-pewter-orange" />
 
           {isExpanded && (
             <URLInput

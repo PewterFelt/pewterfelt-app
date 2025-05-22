@@ -84,8 +84,8 @@ importers:
         specifier: 0.79.2
         version: 0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1)
       react-native-gesture-handler:
-        specifier: ~2.20.2
-        version: 2.20.2(react-native@0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1))(react@18.3.1)
+        specifier: ~2.25.0
+        version: 2.25.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1))(react@18.3.1)
       react-native-reanimated:
         specifier: ~3.17.0
         version: 3.17.5(@babel/core@7.27.1)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1))(react@18.3.1)
@@ -3927,8 +3927,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  react-native-gesture-handler@2.20.2:
-    resolution: {integrity: sha512-HqzFpFczV4qCnwKlvSAvpzEXisL+Z9fsR08YV5LfJDkzuArMhBu2sOoSPUF/K62PCoAb+ObGlTC83TKHfUd0vg==}
+  react-native-gesture-handler@2.25.0:
+    resolution: {integrity: sha512-NPjJi6mislXxvjxQPU9IYwBjb1Uejp8GvAbE1Lhh+xMIMEvmgAvVIp5cz1P+xAbV6uYcRRArm278+tEInGOqWg==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -9686,12 +9686,11 @@ snapshots:
       react: 18.3.1
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1)
 
-  react-native-gesture-handler@2.20.2(react-native@0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1))(react@18.3.1):
+  react-native-gesture-handler@2.25.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1))(react@18.3.1):
     dependencies:
       '@egjs/hammerjs': 2.0.17
       hoist-non-react-statics: 3.3.2
       invariant: 2.2.4
-      prop-types: 15.8.1
       react: 18.3.1
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@18.3.22)(react@18.3.1)
 

@@ -1,5 +1,6 @@
-import { useSession } from "@/components/providers/SessionProvider";
 import { Redirect } from "expo-router";
+
+import { useSession } from "@/components/providers/SessionProvider";
 
 export default function IndexScreen() {
   const { session, authChecked } = useSession();

@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import { GearSix, House } from "phosphor-react-native";
 import React from "react";
 import { Platform } from "react-native";
 
@@ -6,7 +7,6 @@ import { HapticTab } from "@/components/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { House, GearSix } from "phosphor-react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

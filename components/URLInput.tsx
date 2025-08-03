@@ -1,4 +1,4 @@
-import { View, TextInput } from "react-native";
+import { TextInput, View } from "react-native";
 
 type Props = {
   isExpanded: boolean;
@@ -7,11 +7,11 @@ type Props = {
   onChangeText: (text: string) => void;
 };
 
-export const URLInput = ({ 
-  isExpanded, 
+export const URLInput = ({
+  isExpanded,
   MAX_HEIGHT,
   value,
-  onChangeText 
+  onChangeText,
 }: Props) => {
   return (
     <View className="flex-1">

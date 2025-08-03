@@ -1,5 +1,3 @@
-import AddURLPanel from "@/components/AddURLPanel";
-import LinksList from "@/components/LinksList";
 import { useState } from "react";
 import { Dimensions } from "react-native";
 import { Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,6 +8,9 @@ import {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+
+import AddURLPanel from "@/components/AddURLPanel";
+import LinksList from "@/components/LinksList";
 
 export default function HomeScreen() {
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");

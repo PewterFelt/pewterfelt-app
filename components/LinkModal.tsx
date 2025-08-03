@@ -1,5 +1,6 @@
-import React from "react";
-import { Modal, View, Pressable, Text } from "react-native";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Modal, Pressable, Text, View } from "react-native";
 
 type Props = {
   selectedLink: any;
@@ -14,18 +15,18 @@ export const LinkModal = ({ selectedLink, setSelectedLink }: Props) => {
       presentationStyle="pageSheet"
       onRequestClose={() => setSelectedLink(null)}
     >
-      <View className="bg-pewter-gray/5 dark:bg-pewter-black p-6 h-full">
-        <Text className="dark:text-white text-xl font-bold mb-4">
+      <View className="h-full bg-pewter-gray/5 p-6 dark:bg-pewter-black">
+        <Text className="mb-4 text-xl font-bold dark:text-white">
           {selectedLink?.title || "Untitled Link"}
         </Text>
-        <Text className="text-neutral-400 break-words mb-6">
+        <Text className="mb-6 break-words text-neutral-400">
           {selectedLink?.url}
         </Text>
         <Pressable
           onPress={() => setSelectedLink(null)}
-          className="bg-pewter-orange p-3 rounded-lg"
+          className="rounded-lg bg-pewter-orange p-3"
         >
-          <Text className="text-white text-center font-semibold">Close</Text>
+          <Text className="text-center font-semibold text-white">Close</Text>
         </Pressable>
       </View>
     </Modal>

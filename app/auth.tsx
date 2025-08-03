@@ -1,90 +1,61 @@
+import { makeRedirectUri } from "expo-auth-session";
+import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { Router, useRouter } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
+import { Button, Platform, View } from "react-native";
+
 import { supabase } from "@/lib/supabase";
-import * as Linking from "expo-linking";
-import { Stack, useRouter } from "expo-router";
-import { openAuthSessionAsync } from "expo-web-browser";
-import React, { useState } from "react";
-import { Alert, AppState, Button, StyleSheet, View } from "react-native";
 
-AppState.addEventListener("change", (state) => {
-  if (state === "active") {
-    supabase.auth.startAutoRefresh();
-  } else {
-    supabase.auth.stopAutoRefresh();
+if (Platform.OS === "web") WebBrowser.maybeCompleteAuthSession();
+const redirectTo = makeRedirectUri({ path: "auth/callback" });
+
+const createSessionFromUrl = async (url: string) => {
+  const {
+    params: { access_token, refresh_token },
+    errorCode,
+  } = QueryParams.getQueryParams(url);
+  if (errorCode) throw new Error(errorCode);
+  if (!access_token || !refresh_token) throw new Error("Missing access token");
+
+  const { data, error } = await supabase.auth.setSession({
+    access_token,
+    refresh_token,
+  });
+  if (error) throw error;
+
+  return data.session;
+};
+
+const performOAuth = (router: Router) => async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo,
+      skipBrowserRedirect: true,
+    },
+  });
+  if (error) throw error;
+
+  const res = await WebBrowser.openAuthSessionAsync(
+    data?.url ?? "",
+    redirectTo,
+  );
+
+  if (res.type === "success") {
+    const { url } = res;
+    const session = await createSessionFromUrl(url);
+    if (!session) throw new Error("Failed to create session");
+
+    router.replace("/(tabs)");
   }
-});
+};
 
-export default function AuthScreen() {
-  const [loading, setLoading] = useState(false);
+export default function Auth() {
   const router = useRouter();
 
-  async function signInWithGitHub() {
-    setLoading(true);
-
-    try {
-      const redirectUrl = Linking.createURL("/auth/callback");
-
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: "github",
-        options: {
-          redirectTo: redirectUrl,
-          skipBrowserRedirect: true,
-        },
-      });
-
-      if (error) throw error;
-      if (!data?.url) throw new Error("No authentication URL available");
-
-      const result = await openAuthSessionAsync(data.url, redirectUrl);
-
-      if (result.type === "success") {
-        const url = result.url;
-        const params = url.split("#")[1];
-
-        if (params) {
-          const accessToken = new URLSearchParams(params).get("access_token");
-          const refreshToken = new URLSearchParams(params).get("refresh_token");
-
-          if (accessToken && refreshToken) {
-            await supabase.auth.setSession({
-              access_token: accessToken,
-              refresh_token: refreshToken,
-            });
-            router.replace("/(tabs)");
-          }
-        }
-      }
-    } catch (error: any) {
-      Alert.alert("Authentication Error", error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
-    <>
-      <Stack.Screen options={{ title: "Sign In" }} />
-      <View style={styles.container}>
-        <View style={styles.verticallySpaced}>
-          <Button
-            title={loading ? "Loading..." : "Sign in with GitHub"}
-            disabled={loading}
-            onPress={() => signInWithGitHub()}
-          />
-        </View>
-      </View>
-    </>
+    <View className="flex-1 justify-center">
+      <Button onPress={performOAuth(router)} title="Sign in with Github" />
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-});

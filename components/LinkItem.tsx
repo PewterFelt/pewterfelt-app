@@ -1,4 +1,6 @@
-import { Pressable, Text, View, Image } from "react-native";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Image, Pressable, Text, View } from "react-native";
 
 type Props = {
   index: number;
@@ -9,31 +11,31 @@ type Props = {
 export const LinkItem = ({ index, item, setSelectedLink }: Props) => {
   return (
     <Pressable key={`right-${index}`} onPress={() => setSelectedLink(item)}>
-      {item.thumbnail ? (
+      {item?.thumbnail ? (
         <View className="">
           {item.thumbnail && (
-            <View className="overflow-hidden h-44 rounded-lg">
+            <View className="h-44 overflow-hidden rounded-lg">
               <Image
                 source={{ uri: item.thumbnail }}
-                className="w-full rounded-t-lg h-full object-cover"
+                className="h-full w-full rounded-t-lg object-cover"
                 accessibilityLabel={item.title || "Link thumbnail"}
               />
             </View>
           )}
-          <View className="pt-1 pb-4">
+          <View className="pb-4 pt-1">
             <Text
               numberOfLines={1}
-              className="text-sm font-medium mb-1 dark:text-pewter-white text-gray-400"
+              className="mb-1 text-sm font-medium text-gray-400 dark:text-pewter-white"
             >
               {item.title || item.url}
             </Text>
           </View>
         </View>
       ) : (
-        <View className="bg-pewter-white dark:bg-white/5 rounded-lg mb-4 overflow-hidden">
+        <View className="mb-4 overflow-hidden rounded-lg bg-pewter-white dark:bg-white/5">
           <View className="p-4">
-            <Text className="text-md font-semibold mb-1 dark:text-pewter-white">
-              {item.title || item.url}
+            <Text className="text-md mb-1 font-semibold dark:text-pewter-white">
+              {item?.title || item?.url}
             </Text>
           </View>
         </View>

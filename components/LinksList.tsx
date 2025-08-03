@@ -1,17 +1,19 @@
-import { useSession } from "@/components/providers/SessionProvider";
-import { Colors } from "@/constants/Colors";
-import { supabase } from "@/lib/supabase";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Modal,
-  Pressable,
   RefreshControl,
   ScrollView,
   Text,
   View,
 } from "react-native";
 import Animated from "react-native-reanimated";
+
+import { useSession } from "@/components/providers/SessionProvider";
+import { Colors } from "@/constants/Colors";
+import { supabase } from "@/lib/supabase";
+
 import { LinkItem } from "./LinkItem";
 import { LinkModal } from "./LinkModal";
 
@@ -35,13 +37,15 @@ export default function LinksList({ contentStyle }: Props) {
 
     try {
       const { data, error } = await supabase
-        .from("user_link")
-        .select("link:link_id(url, title, tags, favicon, thumbnail)")
+        .from("user_links")
+        .select("links:link_id(url, title, favicon, thumbnail)")
         .eq("user_id", session.user.id);
 
       if (error) throw error;
 
-      setLinks((data as any).map((item: any) => item.link));
+      console.log(data);
+
+      setLinks((data as any).map((item: any) => item.links));
       setError(null);
     } catch (err: any) {
       setError(err.message);
@@ -59,24 +63,27 @@ export default function LinksList({ contentStyle }: Props) {
     setIsRefreshing(true);
     await fetchLinks();
   };
+
   if (loading) {
     return <ActivityIndicator className="mt-4" color={Colors["orange"]} />;
   }
 
   if (error) {
-    return <Text className="text-red-500 text-center">{error}</Text>;
+    return <Text className="text-center text-red-500">{error}</Text>;
   }
 
   if (links.length === 0) {
     return (
-      <Text className="text-neutral-500 text-center mt-4">
-        No links found. Add your first one below!
-      </Text>
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-center text-neutral-500">
+          No links found. Add your first one below!
+        </Text>
+      </View>
     );
   }
 
   return (
-    <Animated.View className="flex-1 pt-20 px-4" style={contentStyle}>
+    <Animated.View className="flex-1 px-4 pt-20" style={contentStyle}>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -91,7 +98,7 @@ export default function LinksList({ contentStyle }: Props) {
         }}
       >
         {/* Left Column */}
-        <View className="flex-1 mr-2">
+        <View className="mr-2 flex-1">
           {links
             .filter((_, index) => index % 2 === 0)
             .map((item, index) => (
@@ -105,7 +112,7 @@ export default function LinksList({ contentStyle }: Props) {
         </View>
 
         {/* Right Column */}
-        <View className="flex-1 ml-2">
+        <View className="ml-2 flex-1">
           {links
             .filter((_, index) => index % 2 === 1)
             .map((item, index) => (

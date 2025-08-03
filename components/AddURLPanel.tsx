@@ -1,5 +1,3 @@
-import { URLInput } from "@/components/URLInput";
-import { Colors } from "@/constants/Colors";
 import { Check, XCircle } from "phosphor-react-native";
 import { useState } from "react";
 import {
@@ -15,6 +13,9 @@ import {
   TapGesture,
 } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
+
+import { URLInput } from "@/components/URLInput";
+import { Colors } from "@/constants/Colors";
 
 type Props = {
   headerStyle: { opacity: number };
@@ -45,14 +46,14 @@ export default function AddURLPanel({
   return (
     <>
       <Animated.View
-        className="absolute top-20 left-0 z-10 w-full flex-row items-center justify-center px-2"
+        className="absolute left-0 top-20 z-10 w-full flex-row items-center justify-center px-2"
         style={headerStyle}
       >
-        <Text className="dark:text-pewter-gray text-xl absolute">
+        <Text className="absolute text-xl dark:text-pewter-gray">
           Add a URL link
         </Text>
         <TouchableOpacity
-          className="bg-pewter-white dark:bg-pewter-black p-2 rounded-full ml-auto"
+          className="ml-auto rounded-full bg-pewter-white p-2 dark:bg-pewter-black"
           onPress={onClose}
         >
           <XCircle size={24} color={Colors["orange"]} weight="duotone" />
@@ -61,12 +62,12 @@ export default function AddURLPanel({
 
       <GestureDetector gesture={Gesture.Simultaneous(tapGesture, panGesture)}>
         <Animated.View
-          className="absolute z-10 bg-pewter-white bottom-[80px] transform -translate-y-2 left-0 right-0 mx-2 rounded-2xl p-4 pt-2 dark:bg-white/5"
+          className="absolute bottom-[80px] left-0 right-0 z-10 mx-2 -translate-y-2 transform rounded-2xl bg-pewter-white p-4 pt-2 dark:bg-white/5"
           style={containerStyle}
         >
-          <View className="w-10 h-1 rounded-full self-center mb-3 mt-1 bg-pewter-orange" />
+          <View className="mb-3 mt-1 h-1 w-10 self-center rounded-full bg-pewter-orange" />
 
-          {isExpanded && (
+          {Boolean(isExpanded) && (
             <URLInput
               isExpanded={isExpanded}
               MAX_HEIGHT={MAX_HEIGHT}
@@ -76,20 +77,20 @@ export default function AddURLPanel({
           )}
 
           {!isExpanded && (
-            <Text className="absolute left-4 top-4 text-gray-400 text-base">
+            <Text className="absolute left-4 top-4 text-base text-gray-400">
               Add a URL link
             </Text>
           )}
         </Animated.View>
       </GestureDetector>
 
-      {isExpanded && (
+      {Boolean(isExpanded) && (
         <KeyboardAvoidingView
           className="absolute bottom-4 right-4 z-10"
           behavior="padding"
         >
           <TouchableOpacity
-            className="bg-pewter-orange rounded-full py-2 px-4 mb-4"
+            className="mb-4 rounded-full bg-pewter-orange px-4 py-2"
             onPress={handleSubmit}
           >
             <Check size={24} color="white" weight="bold" />

@@ -1,0 +1,14 @@
+domains/common/components/ui/**
+components.json
+.prettierrc
+eslint.config.mjs
+pnpm-lock.yaml
+tsconfig.json
+renovate.json
+.pnpm-store/**
+.claude/**
+.release-please-manifest.json
+release-please-config.json
+.release-please-manifest.preview.json
+release-please-config.preview.json
+CHANGELOG.md

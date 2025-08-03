@@ -1,6 +1,13 @@
-import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import { supabase } from "@/lib/supabase";
 
 const SessionContext = createContext<{
   session: Session | null;
@@ -10,7 +17,7 @@ const SessionContext = createContext<{
   authChecked: false,
 });
 
-export function SessionProvider({ children }: { children: React.ReactNode }) {
+export function SessionProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
 

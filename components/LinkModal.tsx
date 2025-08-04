@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Modal, Pressable, Text, View } from "react-native";
 
+import { Link } from "./LinksList";
+
 type Props = {
-  selectedLink: any;
-  setSelectedLink: any;
+  selectedLink: Link | null;
+  setSelectedLink: (link: Link | null) => void;
 };
 
 export const LinkModal = ({ selectedLink, setSelectedLink }: Props) => {
@@ -22,6 +22,7 @@ export const LinkModal = ({ selectedLink, setSelectedLink }: Props) => {
         <Text className="mb-6 break-words text-neutral-400">
           {selectedLink?.url}
         </Text>
+        <Text></Text>
         <Pressable
           onPress={() => setSelectedLink(null)}
           className="rounded-lg bg-pewter-orange p-3"

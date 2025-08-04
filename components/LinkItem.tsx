@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Image, Pressable, Text, View } from "react-native";
+
+import { Link } from "./LinksList";
 
 type Props = {
   index: number;
-  item: any;
-  setSelectedLink: (link: any) => void;
+  item: Link;
+  setSelectedLink: (link: Link) => void;
 };
 
 export const LinkItem = ({ index, item, setSelectedLink }: Props) => {
@@ -17,7 +17,7 @@ export const LinkItem = ({ index, item, setSelectedLink }: Props) => {
             <View className="h-44 overflow-hidden rounded-lg">
               <Image
                 source={{ uri: item.thumbnail }}
-                className="h-full w-full rounded-t-lg object-cover"
+                className="h-full w-full rounded-t-lg object-cover object-center"
                 accessibilityLabel={item.title || "Link thumbnail"}
               />
             </View>

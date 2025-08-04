@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -17,20 +15,24 @@ import { supabase } from "@/lib/supabase";
 import { LinkItem } from "./LinkItem";
 import { LinkModal } from "./LinkModal";
 
+export type Link = {
+  url: string;
+  title: string | null;
+  favicon: string | null;
+  thumbnail: string | null;
+};
+
 type Props = {
   contentStyle: { opacity: number };
 };
 
 export default function LinksList({ contentStyle }: Props) {
   const { session } = useSession();
-  const [links, setLinks] = useState<{ url: string; title: string }[]>([]);
+  const [links, setLinks] = useState<Link[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [selectedLink, setSelectedLink] = useState<{
-    url: string;
-    title: string;
-  } | null>(null);
+  const [selectedLink, setSelectedLink] = useState<Link | null>(null);
 
   const fetchLinks = useCallback(async () => {
     if (!session?.user?.id) return;
@@ -40,15 +42,12 @@ export default function LinksList({ contentStyle }: Props) {
         .from("user_links")
         .select("links:link_id(url, title, favicon, thumbnail)")
         .eq("user_id", session.user.id);
-
       if (error) throw error;
 
-      console.log(data);
-
-      setLinks((data as any).map((item: any) => item.links));
+      setLinks(data.map((item) => item.links));
       setError(null);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError((err as { message: string | null }).message);
     } finally {
       setLoading(false);
       setIsRefreshing(false);
@@ -72,7 +71,7 @@ export default function LinksList({ contentStyle }: Props) {
     return <Text className="text-center text-red-500">{error}</Text>;
   }
 
-  if (links.length === 0) {
+  if (links?.length === 0) {
     return (
       <View className="flex-1 items-center justify-center">
         <Text className="text-center text-neutral-500">
@@ -100,7 +99,7 @@ export default function LinksList({ contentStyle }: Props) {
         {/* Left Column */}
         <View className="mr-2 flex-1">
           {links
-            .filter((_, index) => index % 2 === 0)
+            ?.filter((_, index) => index % 2 === 0)
             .map((item, index) => (
               <LinkItem
                 key={`left-${index}`}
@@ -114,7 +113,7 @@ export default function LinksList({ contentStyle }: Props) {
         {/* Right Column */}
         <View className="ml-2 flex-1">
           {links
-            .filter((_, index) => index % 2 === 1)
+            ?.filter((_, index) => index % 2 === 1)
             .map((item, index) => (
               <LinkItem
                 key={`right-${index}`}

@@ -33,7 +33,9 @@
     "expo:doctor": "npx expo-doctor",
     "expo:check-deps": "npx expo install --check",
     "expo:gen-types": "npx expo customize tsconfig.json",
-    "reset-project": "node ./scripts/reset-project.js"
+    "reset-project": "node ./scripts/reset-project.js",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "expo": {
     "doctor": {
@@ -61,7 +63,7 @@
     ]
   },
   "dependencies": {
-    "@expo/vector-icons": "^14.0.2",
+    "@expo/vector-icons": "^14.0.4",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/elements": "^2.6.2",
@@ -117,6 +119,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.10",
     "react-test-renderer": "18.3.1",
+    "supabase": "^2.33.9",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.20.0"
   },

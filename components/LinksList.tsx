@@ -20,6 +20,7 @@ export type Link = {
   title: string | null;
   favicon: string | null;
   thumbnail: string | null;
+  content: string | null;
 };
 
 type Props = {
@@ -40,11 +41,11 @@ export default function LinksList({ contentStyle }: Props) {
     try {
       const { data, error } = await supabase
         .from("user_links")
-        .select("links:link_id(url, title, favicon, thumbnail)")
+        .select("links:link_id(url, title, favicon, thumbnail), content")
         .eq("user_id", session.user.id);
       if (error) throw error;
 
-      setLinks(data.map((item) => item.links));
+      setLinks(data.map((item) => ({ ...item.links, content: item.content })));
       setError(null);
     } catch (err) {
       setError((err as { message: string | null }).message);

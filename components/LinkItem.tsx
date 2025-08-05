@@ -24,7 +24,7 @@ export const LinkItem = ({ index, item, setSelectedLink }: Props) => {
           )}
           <View className="pb-4 pt-1">
             <Text
-              numberOfLines={1}
+              numberOfLines={2}
               className="mb-1 text-sm font-medium text-gray-400 dark:text-pewter-white"
             >
               {item.title || item.url}

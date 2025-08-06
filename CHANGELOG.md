@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/PewterFelt/pewterfelt-app/compare/pewterfelt-app-v1.0.0...pewterfelt-app-v1.1.0) (2025-08-06)
+
+
+### Features
+
+* add link content to modal as markdown ([75ffd5b](https://github.com/PewterFelt/pewterfelt-app/commit/75ffd5bf51f263f2c4a55b402d2a13d6f1728f7e))
+* supabase types ([e81ca54](https://github.com/PewterFelt/pewterfelt-app/commit/e81ca547d097fb04066f19366f9bf1dd6fbc26e9))
+
 ## 1.0.0 (2025-08-03)
 
 
